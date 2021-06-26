@@ -8,6 +8,9 @@ public class GeneratorBehavior : MonoBehaviour
     public GameObject activatedGenerator;
 
     public Transform AnchorPoint;
+
+    public AudioClip turnOff;
+
     private bool plugged;
 
     private bool connCable = false;
