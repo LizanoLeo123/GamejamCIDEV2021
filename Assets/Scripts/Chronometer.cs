@@ -10,6 +10,6 @@ public class Chronometer : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        print(timer);
+        Debug.Log("TIME: " + timer);
     }
 }
