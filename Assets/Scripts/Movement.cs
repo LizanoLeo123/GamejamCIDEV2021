@@ -6,6 +6,8 @@ public class Movement : MonoBehaviour
 {
     public float speed = 5f;
 
+    public bool hasCable;
+
     Animator animator;
     Rigidbody2D rigidbody2D;
     Vector2 movement;
@@ -13,6 +15,8 @@ public class Movement : MonoBehaviour
     private void Start() {
         rigidbody2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+
+        hasCable = true;
     }
     // Update is called once per frame
     void Update()

@@ -125,18 +125,23 @@ public class CapacitorBehavior : MonoBehaviour
         {
             if (connCable)
             {
+                Movement player = collision.gameObject.GetComponent<Movement>();
+
                 CableObject cable = GameObject.Find("Cable").GetComponent<CableObject>();
-                if (!plugged)
+                if (!plugged && player.hasCable)
                 {
+                    player.hasCable = false;
+
                     plugged = true;
                     cable.EndPoint = AnchorPoint;
                     turnOn.Play();
                 }
-                else
+                else if (plugged && !player.hasCable)
                 {
                     plugged = false;
                     cable.EndPoint = GameObject.Find("Player").transform;
                     AudioSource.PlayClipAtPoint(turnOff, transform.position);
+                    player.hasCable = true;
                 }
                 connCable = false;
             }

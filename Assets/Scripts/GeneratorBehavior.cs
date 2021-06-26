@@ -16,10 +16,14 @@ public class GeneratorBehavior : MonoBehaviour
     private bool connCable = false;
     private bool nearCollider = false;
 
+    private GameManager gameManager;
+
     // Start is called before the first frame update
     void Start()
     {
         plugged = false;
+
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -38,17 +42,26 @@ public class GeneratorBehavior : MonoBehaviour
         {
             if(connCable)
             {
+                Movement player = collision.gameObject.GetComponent<Movement>();
+
                 CableObject cable = GameObject.Find("Cable").GetComponent<CableObject>();
-                if(!plugged)
+                if(!plugged && player.hasCable)
                 {
+                    player.hasCable = false;
+
                     plugged = true;
                     activatedGenerator.SetActive(true);
                     cable.EndPoint = AnchorPoint;
-                } else{
+
+                    gameManager.TurnGenerator(true);
+                } else if (plugged && !player.hasCable){
+                    player.hasCable = true;
+
                     plugged = false;
                     activatedGenerator.SetActive(false);
                     AudioSource.PlayClipAtPoint(turnOff, transform.position);
                     cable.EndPoint = GameObject.Find("Player").transform;
+                    gameManager.TurnGenerator(false);
                 }
                 connCable = false;
             }
