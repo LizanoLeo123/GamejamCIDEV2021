@@ -10,6 +10,9 @@ public class CapacitorBehavior : MonoBehaviour
 
     public Transform AnchorPoint;
 
+    public AudioSource turnOn;
+    public AudioClip turnOff;
+
     public bool plugged;
     private bool canCharge;
     private bool canDischarge;
@@ -127,11 +130,13 @@ public class CapacitorBehavior : MonoBehaviour
                 {
                     plugged = true;
                     cable.EndPoint = AnchorPoint;
+                    turnOn.Play();
                 }
                 else
                 {
                     plugged = false;
                     cable.EndPoint = GameObject.Find("Player").transform;
+                    AudioSource.PlayClipAtPoint(turnOff, transform.position);
                 }
                 connCable = false;
             }
