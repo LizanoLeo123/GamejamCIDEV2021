@@ -6,6 +6,8 @@ public class GeneratorBehavior : MonoBehaviour
 {
     public GameObject activatedGenerator;
 
+    public AudioClip turnOff;
+
     private bool plugged;
 
     // Start is called before the first frame update
@@ -47,6 +49,7 @@ public class GeneratorBehavior : MonoBehaviour
         {
             plugged = false;
             activatedGenerator.SetActive(false);
+            AudioSource.PlayClipAtPoint(turnOff, transform.position);
         }
     }
 }
