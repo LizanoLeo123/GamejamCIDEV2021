@@ -22,6 +22,7 @@ public class CapacitorBehavior : MonoBehaviour
 
     private bool connCable = false;
     private bool nearCollider = false;
+    private bool newCable = false;
 
     void Start()
     {
@@ -48,6 +49,11 @@ public class CapacitorBehavior : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && nearCollider)
         {
             connCable = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.R) && nearCollider)
+        {
+            newCable = true;
         }
 
         if (plugged)
@@ -123,22 +129,35 @@ public class CapacitorBehavior : MonoBehaviour
         //Player
         if (collision.CompareTag("Player"))
         {
+            Movement player = collision.gameObject.GetComponent<Movement>();
+
             if (connCable)
             {
-                CableObject cable = GameObject.Find("Cable").GetComponent<CableObject>();
-                if (!plugged)
+                CableObject cable = player.currentCable;
+                //CableObject cable = GameObject.Find("Cable").GetComponent<CableObject>();
+                if (!plugged && player.hasCable)
                 {
+                    player.hasCable = false;
+
                     plugged = true;
                     cable.EndPoint = AnchorPoint;
                     turnOn.Play();
                 }
-                else
+                else if (plugged && !player.hasCable)
                 {
                     plugged = false;
                     cable.EndPoint = GameObject.Find("Player").transform;
                     AudioSource.PlayClipAtPoint(turnOff, transform.position);
+                    player.hasCable = true;
                 }
                 connCable = false;
+            }
+
+            if (newCable)
+            {
+                player.lastAnchor = AnchorPoint;
+                player.InstantiateCable();
+                newCable = false;
             }
         }
     }

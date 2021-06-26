@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/About.unity
     guid: 182307d2135370745ab2b90092e2e187
+  - enabled: 1
+    path: Assets/Scenes/DevLeo.unity
+    guid: 121dad5231370dc45bbd5d886b68c764
   m_configObjects: {}

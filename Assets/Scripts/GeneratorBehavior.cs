@@ -15,11 +15,16 @@ public class GeneratorBehavior : MonoBehaviour
 
     private bool connCable = false;
     private bool nearCollider = false;
+    private bool newCable = false;
+
+    private GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
         plugged = false;
+
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -29,6 +34,11 @@ public class GeneratorBehavior : MonoBehaviour
         {
             connCable = true;
         }
+
+        if (Input.GetKeyDown(KeyCode.R) && nearCollider)
+        {
+            newCable = true;
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -36,21 +46,40 @@ public class GeneratorBehavior : MonoBehaviour
          //Player
         if (collision.CompareTag("Player"))
         {
-            if(connCable)
+            Movement player = collision.gameObject.GetComponent<Movement>();
+
+            if (connCable)
             {
-                CableObject cable = GameObject.Find("Cable").GetComponent<CableObject>();
-                if(!plugged)
+
+                CableObject cable = player.currentCable;
+                //CableObject cable = GameObject.Find("Cable").GetComponent<CableObject>();
+                if (!plugged && player.hasCable)
                 {
+                    player.hasCable = false;
+                    player.lastAnchor = AnchorPoint;
+
                     plugged = true;
                     activatedGenerator.SetActive(true);
                     cable.EndPoint = AnchorPoint;
-                } else{
+
+                    gameManager.TurnGenerator(true);
+                } else if (plugged && !player.hasCable){
+                    player.hasCable = true;
+
                     plugged = false;
                     activatedGenerator.SetActive(false);
                     AudioSource.PlayClipAtPoint(turnOff, transform.position);
                     cable.EndPoint = GameObject.Find("Player").transform;
+                    gameManager.TurnGenerator(false);
                 }
                 connCable = false;
+            }
+
+            if (newCable)
+            {
+                player.lastAnchor = AnchorPoint;
+                player.InstantiateCable();
+                newCable = false;
             }
         }
     }
