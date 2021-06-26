@@ -15,8 +15,8 @@ public class CableObject : MonoBehaviour
     private LineRenderer lineRenderer;
     private List<CableSegment> cableSegments = new List<CableSegment>();
     private float cableSegLen = -0.1f;
-    private int segmentLength = 200;
-    private float lineWidth = 0.2f;
+    private int segmentLength = 20;
+    private float lineWidth = 0.1f;
 
     //Sling shot 
     private bool moveToMouse = false;
@@ -167,5 +167,17 @@ public class CableObject : MonoBehaviour
             this.posNow = pos;
             this.posOld = pos;
         }
+    }
+
+    public Vector3[] GetPositions() 
+    {
+        Vector3[] positions = new Vector3[lineRenderer.positionCount];
+        lineRenderer.GetPositions(positions);
+        return positions;
+    }
+
+    public float getLineWidth()
+    {
+        return this.lineWidth;
     }
 }
