@@ -1,15 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class Chronometer : MonoBehaviour
 {
-    public float timer = 0.0f;
+    public Text timerDisplay;
+    public float minutes, seconds;
 
-    // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
-        Debug.Log("TIME: " + timer);
+        minutes = (int)(Time.time/60f); 
+        seconds = (int)(Time.time%60f);
+        timerDisplay.text = minutes.ToString("00")+":" + seconds.ToString("00"); 
     }
 }
