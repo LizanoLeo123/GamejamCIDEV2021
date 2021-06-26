@@ -8,11 +8,16 @@ public class CapacitorBehavior : MonoBehaviour
 
     public int power;
 
+    public Transform AnchorPoint;
+
     public bool plugged;
     private bool canCharge;
     private bool canDischarge;
 
     SpriteRenderer render;
+
+    private bool connCable = false;
+    private bool nearCollider = false;
 
     void Start()
     {
@@ -26,13 +31,18 @@ public class CapacitorBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.D))
+        //if (Input.GetKeyDown(KeyCode.F))
+        //{
+        //    plugged = true;
+        //}
+        //if (Input.GetKeyDown(KeyCode.G))
+        //{
+        //    plugged = false;
+        //}
+
+        if (Input.GetKeyDown(KeyCode.E) && nearCollider)
         {
-            plugged = true;
-        }
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            plugged = false;
+            connCable = true;
         }
 
         if (plugged)
@@ -80,5 +90,48 @@ public class CapacitorBehavior : MonoBehaviour
 
         render.sprite = sprites[power];
         canDischarge = true;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //Player
+        if (collision.CompareTag("Player"))
+        {
+            nearCollider = true;
+        }
+
+        //Capacitor
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        //Player
+        if (collision.CompareTag("Player"))
+        {
+            nearCollider = false;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        //Player
+        if (collision.CompareTag("Player"))
+        {
+            if (connCable)
+            {
+                CableObject cable = GameObject.Find("Cable").GetComponent<CableObject>();
+                if (!plugged)
+                {
+                    plugged = true;
+                    cable.EndPoint = AnchorPoint;
+                }
+                else
+                {
+                    plugged = false;
+                    cable.EndPoint = GameObject.Find("Player").transform;
+                }
+                connCable = false;
+            }
+        }
     }
 }
