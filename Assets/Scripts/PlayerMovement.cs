@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (InputX != 0 || InputY != 0)
         {
-            direction = new Vector3(InputX, InputY, 0);
+            direction = new Vector3(InputX, InputY, 0).normalized;
             body.MovePosition(new Vector2((transform.position.x + direction.x * speed * Time.deltaTime), (transform.position.y + direction.y * speed * Time.deltaTime)));
         }
 
