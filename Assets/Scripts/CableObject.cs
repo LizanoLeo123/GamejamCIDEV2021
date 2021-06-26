@@ -12,7 +12,7 @@ public class CableObject : MonoBehaviour
         public Transform StartPoint;
     public Transform EndPoint;
     public float distance;
-    public float maxDistance = 10.0f;
+    public float maxDistance;
     public bool inRange = true;
     private LineRenderer lineRenderer;
     private List<CableSegment> cableSegments = new List<CableSegment>();
