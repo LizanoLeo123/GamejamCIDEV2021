@@ -47,6 +47,7 @@ public class GeneratorBehavior : MonoBehaviour
                 } else{
                     plugged = false;
                     activatedGenerator.SetActive(false);
+                    AudioSource.PlayClipAtPoint(turnOff, transform.position);
                     cable.EndPoint = GameObject.Find("Player").transform;
                 }
                 connCable = false;
