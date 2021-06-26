@@ -6,12 +6,12 @@ public class GeneratorBehavior : MonoBehaviour
 {
     public GameObject activatedGenerator;
 
-    private bool condition;
+    private bool plugged;
 
     // Start is called before the first frame update
     void Start()
     {
-        condition = false;
+        plugged = false;
     }
 
     // Update is called once per frame
@@ -20,12 +20,33 @@ public class GeneratorBehavior : MonoBehaviour
         //Debug purpose only
         if (Input.GetKeyDown(KeyCode.C))
         {
-            condition = true;
+            plugged = true;
         }
 
-        if (condition && Input.GetKeyDown(KeyCode.E))
+        if (plugged && Input.GetKeyDown(KeyCode.E))
         {
             activatedGenerator.SetActive(true);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //Player
+        if (collision.CompareTag("Player"))
+        {
+            plugged = true;
+        }
+
+        //Capacitor
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        //Player
+        if (collision.CompareTag("Player"))
+        {
+            plugged = false;
+            activatedGenerator.SetActive(false);
         }
     }
 }
