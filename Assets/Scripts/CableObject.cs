@@ -11,13 +11,19 @@ public class CableObject : MonoBehaviour
 {
         public Transform StartPoint;
     public Transform EndPoint;
-
+    public float distance;
+    public float maxDistance = 10.0f;
+    public bool inRange = true;
     private LineRenderer lineRenderer;
     private List<CableSegment> cableSegments = new List<CableSegment>();
     private float cableSegLen = -0.1f;
     private int segmentLength = 20;
     private float lineWidth = 0.1f;
-
+    
+    private float alpha = 1.0f;
+    Gradient okColor = new Gradient();
+    Gradient outOfRangeColor = new Gradient();
+    
     //Sling shot 
     private bool moveToMouse = false;
     private Vector3 mousePositionWorld;
@@ -26,6 +32,15 @@ public class CableObject : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        outOfRangeColor.SetKeys(
+            new GradientColorKey[] { new GradientColorKey(Color.red, 0.0f), new GradientColorKey(Color.red, 1.0f) },
+            new GradientAlphaKey[] { new GradientAlphaKey(alpha, 0.0f), new GradientAlphaKey(alpha, 1.0f) }
+        );
+        okColor.SetKeys(
+            new GradientColorKey[] { new GradientColorKey(Color.black, 0.0f), new GradientColorKey(Color.black, 1.0f) },
+            new GradientAlphaKey[] { new GradientAlphaKey(alpha, 0.0f), new GradientAlphaKey(alpha, 1.0f) }
+        );
+        maxDistance = 10.0f;
         this.lineRenderer = this.GetComponent<LineRenderer>();
         Vector3 cableStartPoint = StartPoint.position;
 
@@ -45,6 +60,8 @@ public class CableObject : MonoBehaviour
         } else if (Input.GetMouseButtonUp(0)) {
             this.moveToMouse = false;
         }
+        
+        
 
         Vector3 screenMousePos = Input.mousePosition;
         float xStart = StartPoint.position.x;
@@ -77,7 +94,22 @@ public class CableObject : MonoBehaviour
             firstSegment.posNow += forceGravity * Time.fixedDeltaTime;
             this.cableSegments[i] = firstSegment;
         }
-
+        distance = Vector2.Distance(this.StartPoint.position, this.EndPoint.position);
+        if(distance > maxDistance && inRange)
+        {
+            inRange = false;
+            //lineRenderer.material.color = Color.red;
+            // A simple 2 color gradient with a fixed alpha of 1.0f.
+            
+            lineRenderer.colorGradient = outOfRangeColor;
+            //lineRenderer.color = new Color(1,0,0,1);
+        } else if(distance <= maxDistance && !inRange)
+        {
+            inRange = true;
+            lineRenderer.colorGradient = okColor;
+            //lineRenderer.material.color = Color.black;
+            //lineRenderer.color = new Color(0,0,0,1);
+        }
         //CONSTRAINTS
         for (int i = 0; i < 50; i++)
         {
