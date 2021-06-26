@@ -15,6 +15,7 @@ public class CapacitorBehavior : MonoBehaviour
     private bool canDischarge;
 
     SpriteRenderer render;
+    Rigidbody2D rb;
 
     private bool connCable = false;
     private bool nearCollider = false;
@@ -26,6 +27,7 @@ public class CapacitorBehavior : MonoBehaviour
         canDischarge = true;
 
         render = GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -109,6 +111,7 @@ public class CapacitorBehavior : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             nearCollider = false;
+            rb.velocity = Vector2.zero;
         }
     }
 
