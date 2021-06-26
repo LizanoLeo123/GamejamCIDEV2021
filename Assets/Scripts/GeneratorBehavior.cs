@@ -15,6 +15,7 @@ public class GeneratorBehavior : MonoBehaviour
 
     private bool connCable = false;
     private bool nearCollider = false;
+    private bool newCable = false;
 
     private GameManager gameManager;
 
@@ -33,6 +34,11 @@ public class GeneratorBehavior : MonoBehaviour
         {
             connCable = true;
         }
+
+        if (Input.GetKeyDown(KeyCode.R) && nearCollider)
+        {
+            newCable = true;
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -40,14 +46,17 @@ public class GeneratorBehavior : MonoBehaviour
          //Player
         if (collision.CompareTag("Player"))
         {
-            if(connCable)
-            {
-                Movement player = collision.gameObject.GetComponent<Movement>();
+            Movement player = collision.gameObject.GetComponent<Movement>();
 
-                CableObject cable = GameObject.Find("Cable").GetComponent<CableObject>();
-                if(!plugged && player.hasCable)
+            if (connCable)
+            {
+
+                CableObject cable = player.currentCable;
+                //CableObject cable = GameObject.Find("Cable").GetComponent<CableObject>();
+                if (!plugged && player.hasCable)
                 {
                     player.hasCable = false;
+                    player.lastAnchor = AnchorPoint;
 
                     plugged = true;
                     activatedGenerator.SetActive(true);
@@ -64,6 +73,13 @@ public class GeneratorBehavior : MonoBehaviour
                     gameManager.TurnGenerator(false);
                 }
                 connCable = false;
+            }
+
+            if (newCable)
+            {
+                player.lastAnchor = AnchorPoint;
+                player.InstantiateCable();
+                newCable = false;
             }
         }
     }
