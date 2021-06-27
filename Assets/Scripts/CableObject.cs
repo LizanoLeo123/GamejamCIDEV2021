@@ -12,8 +12,10 @@ public class CableObject : MonoBehaviour
         public Transform StartPoint;
     public Transform EndPoint;
     public float distance;
-    public float maxDistance = 10.0f;
+    public float maxDistance = 30f;
     public bool inRange = true;
+    public bool electrified = false;
+    public bool permanentElectrified = false;
     private LineRenderer lineRenderer;
     private List<CableSegment> cableSegments = new List<CableSegment>();
     private float cableSegLen = -0.1f;
@@ -40,7 +42,6 @@ public class CableObject : MonoBehaviour
             new GradientColorKey[] { new GradientColorKey(Color.black, 0.0f), new GradientColorKey(Color.black, 1.0f) },
             new GradientAlphaKey[] { new GradientAlphaKey(alpha, 0.0f), new GradientAlphaKey(alpha, 1.0f) }
         );
-        maxDistance = 10.0f;
         this.lineRenderer = this.GetComponent<LineRenderer>();
         Vector3 cableStartPoint = StartPoint.position;
 
