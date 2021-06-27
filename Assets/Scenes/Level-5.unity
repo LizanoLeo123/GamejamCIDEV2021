@@ -2607,6 +2607,7 @@ Tilemap:
       m_AllTileFlags: 1073741825
   - first: {x: -14, y: 7, z: 0}
     second:
+
       serializedVersion: 2
       m_TileIndex: 15
       m_TileSpriteIndex: 11
@@ -27143,7 +27144,6 @@ GameObject:
   - component: {fileID: 1823198706}
   - component: {fileID: 1823198707}
   - component: {fileID: 1823198709}
-  - component: {fileID: 1823198702}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -27151,19 +27151,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1823198702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1823198701}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00e1e33c9d714174b9c3e56ba988e460, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timerDisplay: {fileID: 1586487035}
 --- !u!212 &1823198703
 SpriteRenderer:
   m_ObjectHideFlags: 0
