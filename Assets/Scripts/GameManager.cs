@@ -8,27 +8,29 @@ public class GameManager : MonoBehaviour
     public string currentLevel;
     public string nextLevel;
 
-
     public int generatorsGoal;
 
     public bool gameFinished;
+    public Chronometer timer;
 
     private int generatorsCounter;
-
     // Start is called before the first frame update
     void Start()
     {
         gameFinished = false;
         generatorsCounter = 0;
+        timer.ResetTimer();
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if(Input.GetKeyDown(KeyCode.Q)){
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
             SceneManager.LoadScene(currentLevel);
-        }   
+            timer.ResetTimer();
+        }
     }
 
     public void TurnGenerator(bool state)
@@ -36,13 +38,14 @@ public class GameManager : MonoBehaviour
         if (state)
         {
             generatorsCounter += 1;
-            
-            if(generatorsCounter == generatorsGoal)
+
+            if (generatorsCounter == generatorsGoal)
             {
                 //UI Manager. show victory screen
 
                 StartCoroutine(GoToNextLevel());
                 gameFinished = true;
+                timer.StopTimer();
             }
         }
         else
@@ -55,5 +58,8 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(4f);
         SceneManager.LoadScene(nextLevel);
+        //timer.ResetTimer();
+        //timer.StartTimer();
+
     }
 }

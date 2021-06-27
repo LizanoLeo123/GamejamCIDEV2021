@@ -2211,6 +2211,7 @@ GameObject:
   m_Component:
   - component: {fileID: 138747133}
   - component: {fileID: 138747132}
+  - component: {fileID: 138747134}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2234,6 +2235,7 @@ MonoBehaviour:
   nextLevel: Level-2
   generatorsGoal: 1
   gameFinished: 0
+  timer: {fileID: 138747134}
 --- !u!4 &138747133
 Transform:
   m_ObjectHideFlags: 0
@@ -2248,6 +2250,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &138747134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 138747131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00e1e33c9d714174b9c3e56ba988e460, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerDisplay: {fileID: 592858707}
 --- !u!114 &329776825 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7420012119989218298, guid: 1ecb46094c86ffd40a14dd23e384900d, type: 3}
@@ -25636,7 +25651,6 @@ GameObject:
   - component: {fileID: 1823198706}
   - component: {fileID: 1823198707}
   - component: {fileID: 1823198709}
-  - component: {fileID: 1823198702}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -25644,19 +25658,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1823198702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1823198701}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00e1e33c9d714174b9c3e56ba988e460, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timerDisplay: {fileID: 592858707}
 --- !u!212 &1823198703
 SpriteRenderer:
   m_ObjectHideFlags: 0
