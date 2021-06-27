@@ -8,12 +8,12 @@ using UnityEngine.UI;
 public class Chronometer : MonoBehaviour
 {
     public Text timerDisplay;
-    public float minutes, seconds;
+    float minutes, seconds;
 
     void Update()
     {
-        minutes = (int)(Time.time/60f); 
-        seconds = (int)(Time.time%60f);
-        timerDisplay.text = minutes.ToString("00")+":" + seconds.ToString("00"); 
+        minutes = (int)(Time.time / 60f);
+        seconds = (int)(Time.time % 60f);
+        timerDisplay.text = minutes.ToString("00") + ":" + seconds.ToString("00");
     }
 }
