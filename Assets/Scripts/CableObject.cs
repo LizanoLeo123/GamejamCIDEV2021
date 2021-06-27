@@ -9,7 +9,7 @@ public enum CableType
 
 public class CableObject : MonoBehaviour
 {
-        public Transform StartPoint;
+    public Transform StartPoint;
     public Transform EndPoint;
     public float distance;
     public float maxDistance = 30f;
@@ -57,7 +57,7 @@ public class CableObject : MonoBehaviour
     {
         this.DrawCable();
         if (Input.GetMouseButtonDown(0)) {
-            this.moveToMouse = true;
+            this.moveToMouse = false;
         } else if (Input.GetMouseButtonUp(0)) {
             this.moveToMouse = false;
         }

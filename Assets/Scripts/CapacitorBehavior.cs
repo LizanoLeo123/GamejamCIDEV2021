@@ -148,10 +148,18 @@ public class CapacitorBehavior : MonoBehaviour
         {
             Movement player = collision.gameObject.GetComponent<Movement>();
 
-            if (connCable)
+
+            if (newCable)
+            {
+                player.lastAnchor = AnchorPoint;
+                player.InstantiateCable();
+                cables.Add(player.currentCable);
+                newCable = false;
+            }
+            else if (connCable)
             {
                 CableObject cable = player.currentCable;
-                if(player.currentCable == null)
+                if (player.currentCable == null)
                 {
                     return;
                 }
@@ -174,14 +182,6 @@ public class CapacitorBehavior : MonoBehaviour
                     cables.Remove(cable);
                 }
                 connCable = false;
-            }
-
-            if (newCable)
-            {
-                player.lastAnchor = AnchorPoint;
-                player.InstantiateCable();
-                cables.Add(player.currentCable);
-                newCable = false;
             }
         }
     }

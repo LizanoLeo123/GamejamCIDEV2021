@@ -22,7 +22,8 @@ public class GeneratorBehavior : MonoBehaviour
 
     private GameManager gameManager;
 
-    List<CableObject> cables = new List<CableObject>();
+    public List<CableObject> cables = new List<CableObject>();
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -68,7 +69,14 @@ public class GeneratorBehavior : MonoBehaviour
         {
             Movement player = collision.gameObject.GetComponent<Movement>();
 
-            if (connCable)
+            if (newCable)
+            {
+                player.lastAnchor = AnchorPoint;
+                player.InstantiateCable();
+                cables.Add(player.currentCable);
+                newCable = false;
+            }
+            else if (connCable)
             {
 
                 CableObject cable = player.currentCable;
@@ -99,13 +107,6 @@ public class GeneratorBehavior : MonoBehaviour
                     gameManager.TurnGenerator(false);
                 }
                 connCable = false;
-            }
-
-            if (newCable)
-            {
-                player.lastAnchor = AnchorPoint;
-                player.InstantiateCable();
-                newCable = false;
             }
         }
     }
