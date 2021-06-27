@@ -57,7 +57,8 @@ public class CapacitorBehavior : MonoBehaviour
             newCable = true;
         }
 
-        if (electrified)
+        //if (electrified)
+        if (cablesElectrified())
         {
             if (canCharge)
             {
@@ -72,7 +73,7 @@ public class CapacitorBehavior : MonoBehaviour
             }
         }
 
-        if(cablesElectrified())
+        if(cablesElectrified() || power > 0)
         {
             electrified = true;
             for(int i = 0; i < cables.Count; i++){
@@ -149,7 +150,7 @@ public class CapacitorBehavior : MonoBehaviour
             Movement player = collision.gameObject.GetComponent<Movement>();
 
 
-            if (newCable)
+            if (newCable && !player.hasCable)
             {
                 player.lastAnchor = AnchorPoint;
                 player.InstantiateCable();

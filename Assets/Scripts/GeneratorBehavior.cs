@@ -69,7 +69,7 @@ public class GeneratorBehavior : MonoBehaviour
         {
             Movement player = collision.gameObject.GetComponent<Movement>();
 
-            if (newCable)
+            if (newCable && !player.hasCable)
             {
                 player.lastAnchor = AnchorPoint;
                 player.InstantiateCable();
