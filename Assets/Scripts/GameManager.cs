@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public bool gameFinished;
     public Chronometer timer;
 
+    [SerializeField] MainMenu menu;
+
     private int generatorsCounter;
     // Start is called before the first frame update
     void Start()
@@ -42,8 +44,13 @@ public class GameManager : MonoBehaviour
             if (generatorsCounter == generatorsGoal)
             {
                 //UI Manager. show victory screen
-
-                StartCoroutine(GoToNextLevel());
+                if (nextLevel.Equals("FinalScene"))
+                {
+                    StartCoroutine(menu.LoadLevel(nextLevel));
+                } else
+                {
+                    StartCoroutine(GoToNextLevel());
+                }                
                 gameFinished = true;
                 timer.StopTimer();
             }

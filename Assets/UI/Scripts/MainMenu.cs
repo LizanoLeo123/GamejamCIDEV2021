@@ -34,7 +34,7 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
-    IEnumerator LoadLevel(string levelName)
+    public IEnumerator LoadLevel(string levelName)
     {
         transition.SetTrigger("Start");
         yield return new WaitForSeconds(transitionTime);

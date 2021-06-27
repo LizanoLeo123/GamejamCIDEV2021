@@ -183,21 +183,19 @@ MonoBehaviour:
   m_text: 'After World War V in 2145, humanity almost face the extinction due to
     atomic war...
 
-    
 
-    You are part of a small group of survivors that were
-    left in a world with no electricity what so ever...
+    You are part of a small group of survivors that were left
+    in a world with no electricity what so ever...
 
-    
 
-    A few months
-    after this apocalypse, you start noticing that some crystals created by the radiation,
-    started to create sparks of energy...
+    A few months after this
+    apocalypse, you start noticing that some crystals created by the radiation, started
+    to create sparks of energy...
 
-    
 
-    After that you will have to
-    use your abilities of engineer to bring electricity again to the whole world...'
+    After that you will have to use your abilities
+    of engineer to bring electricity again to the whole world by connecting pillars
+    with each other using capacitors...'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5bc9928e1e3d9c049b9d03138b1374ac, type: 2}
   m_sharedMaterial: {fileID: 8330332418425519985, guid: 5bc9928e1e3d9c049b9d03138b1374ac, type: 2}
@@ -224,8 +222,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 45
+  m_fontSizeBase: 45
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

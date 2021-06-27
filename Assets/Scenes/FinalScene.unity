@@ -880,7 +880,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Thanks for Playing Electrium
+  m_text: 'Thanks for Playing Electrium
+
+
+
+    You reconnected the World!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5bc9928e1e3d9c049b9d03138b1374ac, type: 2}
   m_sharedMaterial: {fileID: 8330332418425519985, guid: 5bc9928e1e3d9c049b9d03138b1374ac, type: 2}

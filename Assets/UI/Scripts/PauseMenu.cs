@@ -39,16 +39,14 @@ public class PauseMenu : MonoBehaviour
     }
 
     public void Restart()
-    {
-        PauseMenuUI.SetActive(false);
-        Time.timeScale = 1f;
+    {                
         GameIsPaused = false;
         StartCoroutine(LoadLevel(levelName));
     }
 
     public void GoGome()
     {
-        PauseMenuUI.SetActive(false);
+        
         Time.timeScale = 1f;
         GameIsPaused = false;
         StartCoroutine(LoadLevel("MainMenu"));
@@ -57,7 +55,9 @@ public class PauseMenu : MonoBehaviour
     IEnumerator LoadLevel(string levelName)
     {
         transition.SetTrigger("Start");
-        yield return new WaitForSeconds(transitionTime);
+        yield return new WaitForSeconds(0);
+        PauseMenuUI.SetActive(false);
+        Time.timeScale = 1f;
         SceneManager.LoadScene(levelName);
     }
 }
