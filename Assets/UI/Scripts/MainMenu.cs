@@ -21,7 +21,17 @@ public class MainMenu : MonoBehaviour
 
     public void AboutButtonPressed()
     {
-        
+        StartCoroutine(LoadLevel("About"));
+    }
+
+    public void GoToMainMenuButtonPressed()
+    {
+        StartCoroutine(LoadLevel("MainMenu"));
+    }
+
+    public void ExitButtonPressed()
+    {
+        Application.Quit();
     }
 
     IEnumerator LoadLevel(string levelName)
