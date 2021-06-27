@@ -7,6 +7,7 @@ public class CapacitorBehavior : MonoBehaviour
     public Sprite[] sprites;
 
     public int power;
+    public bool electrified = false;
 
     public Transform AnchorPoint;
 
@@ -23,7 +24,7 @@ public class CapacitorBehavior : MonoBehaviour
     private bool connCable = false;
     private bool nearCollider = false;
     private bool newCable = false;
-
+    List<CableObject> cables = new List<CableObject>();
     void Start()
     {
         power = 0;
@@ -56,7 +57,7 @@ public class CapacitorBehavior : MonoBehaviour
             newCable = true;
         }
 
-        if (plugged)
+        if (electrified)
         {
             if (canCharge)
             {
@@ -69,6 +70,22 @@ public class CapacitorBehavior : MonoBehaviour
             {
                 StartCoroutine(Discharge());
             }
+        }
+
+        if(cablesElectrified())
+        {
+            electrified = true;
+            for(int i = 0; i < cables.Count; i++){
+                cables[i].electrified = true;
+            }
+        } else if(electrified)
+        {
+            for(int i = 0; i < cables.Count; i++){
+                if(!cables[i].permanentElectrified){
+                    cables[i].electrified = false;
+                }
+            }
+            electrified = false;
         }
     }
 
@@ -131,17 +148,30 @@ public class CapacitorBehavior : MonoBehaviour
         {
             Movement player = collision.gameObject.GetComponent<Movement>();
 
-            if (connCable)
+
+            if (newCable)
+            {
+                player.lastAnchor = AnchorPoint;
+                player.InstantiateCable();
+                cables.Add(player.currentCable);
+                newCable = false;
+            }
+            else if (connCable)
             {
                 CableObject cable = player.currentCable;
+                if (player.currentCable == null)
+                {
+                    return;
+                }
                 //CableObject cable = GameObject.Find("Cable").GetComponent<CableObject>();
-                if (!plugged && player.hasCable)
+                if (!plugged && player.hasCable && cable.inRange)
                 {
                     player.hasCable = false;
-
+                    player.currentCable = null;
                     plugged = true;
                     cable.EndPoint = AnchorPoint;
                     turnOn.Play();
+                    cables.Add(cable);
                 }
                 else if (plugged && !player.hasCable)
                 {
@@ -149,16 +179,23 @@ public class CapacitorBehavior : MonoBehaviour
                     cable.EndPoint = GameObject.Find("Player").transform;
                     AudioSource.PlayClipAtPoint(turnOff, transform.position);
                     player.hasCable = true;
+                    cables.Remove(cable);
                 }
                 connCable = false;
             }
+        }
+    }
 
-            if (newCable)
+    private bool cablesElectrified(){
+        bool electrified = false;
+        
+        for(int i = 0; i < cables.Count; i++){
+            if (cables[i].inRange && cables[i].electrified)
             {
-                player.lastAnchor = AnchorPoint;
-                player.InstantiateCable();
-                newCable = false;
+                return true;
             }
         }
+
+        return electrified;
     }
 }

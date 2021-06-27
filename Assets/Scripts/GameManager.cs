@@ -5,7 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public string currentLevel;
     public string nextLevel;
+
 
     public int generatorsGoal;
 
@@ -23,7 +25,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+        if(Input.GetKeyDown(KeyCode.Q)){
+            SceneManager.LoadScene(currentLevel);
+        }   
     }
 
     public void TurnGenerator(bool state)

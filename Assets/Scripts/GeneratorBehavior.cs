@@ -11,6 +11,9 @@ public class GeneratorBehavior : MonoBehaviour
 
     public AudioClip turnOff;
 
+    public bool electrified = false;
+
+    public bool permanentElectrified = false;
     private bool plugged;
 
     private bool connCable = false;
@@ -19,11 +22,12 @@ public class GeneratorBehavior : MonoBehaviour
 
     private GameManager gameManager;
 
+    public List<CableObject> cables = new List<CableObject>();
+    
     // Start is called before the first frame update
     void Start()
     {
         plugged = false;
-
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
@@ -39,6 +43,23 @@ public class GeneratorBehavior : MonoBehaviour
         {
             newCable = true;
         }
+
+        if(permanentElectrified || cablesElectrified())
+        {
+            
+            activatedGenerator.SetActive(true);
+            electrified = true;
+            for(int i = 0; i < cables.Count; i++){
+                cables[i].electrified = true;
+            }
+        } else if(electrified)
+        {
+            activatedGenerator.SetActive(false);
+            for(int i = 0; i < cables.Count; i++){
+                cables[i].electrified = true;
+            }
+            electrified = false;
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -48,38 +69,44 @@ public class GeneratorBehavior : MonoBehaviour
         {
             Movement player = collision.gameObject.GetComponent<Movement>();
 
-            if (connCable)
+            if (newCable)
+            {
+                player.lastAnchor = AnchorPoint;
+                player.InstantiateCable();
+                cables.Add(player.currentCable);
+                newCable = false;
+            }
+            else if (connCable)
             {
 
                 CableObject cable = player.currentCable;
+                if(player.currentCable == null)
+                {
+                    return;
+                }
+
                 //CableObject cable = GameObject.Find("Cable").GetComponent<CableObject>();
-                if (!plugged && player.hasCable)
+                if (!plugged && player.hasCable && cable.inRange)
                 {
                     player.hasCable = false;
                     player.lastAnchor = AnchorPoint;
-
+                    player.currentCable = null;
                     plugged = true;
-                    activatedGenerator.SetActive(true);
+                    //activatedGenerator.SetActive(true);
                     cable.EndPoint = AnchorPoint;
-
+                    cables.Add(cable);
                     gameManager.TurnGenerator(true);
                 } else if (plugged && !player.hasCable){
                     player.hasCable = true;
 
                     plugged = false;
-                    activatedGenerator.SetActive(false);
+                    //activatedGenerator.SetActive(false);
                     AudioSource.PlayClipAtPoint(turnOff, transform.position);
                     cable.EndPoint = GameObject.Find("Player").transform;
+                    cables.Remove(cable);
                     gameManager.TurnGenerator(false);
                 }
                 connCable = false;
-            }
-
-            if (newCable)
-            {
-                player.lastAnchor = AnchorPoint;
-                player.InstantiateCable();
-                newCable = false;
             }
         }
     }
@@ -105,4 +132,17 @@ public class GeneratorBehavior : MonoBehaviour
         }
     }
     
+
+    private bool cablesElectrified(){
+        bool electrified = false;
+        
+        for(int i = 0; i < cables.Count; i++){
+            if (cables[i].inRange && cables[i].electrified)
+            {
+                return true;
+            }
+        }
+
+        return electrified;
+    }
 }
